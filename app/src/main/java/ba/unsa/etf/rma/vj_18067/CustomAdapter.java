@@ -100,7 +100,7 @@ public class CustomAdapter extends BaseAdapter{
             tempValues = ( Muzicar ) data.get( position );
 
             /************  Set Model values in Holder elements ***********/
-            System.out.println("postavlja");
+            //System.out.println("postavlja");
             holder.text.setText( tempValues.getIme() );
             holder.text1.setText( tempValues.getZanr() );
             holder.image.setImageResource(

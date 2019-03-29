@@ -1,19 +1,24 @@
 package ba.unsa.etf.rma.vj_18067;
 
+import java.util.ArrayList;
+
 public class Muzicar {
     private String ime, prezime, biografija, zanr, webStranica, slikaZanra;
+    private ArrayList<String> listaTopPet = new ArrayList<>();
 
     public Muzicar() {
     }
 
-    public Muzicar(String ime, String prezime, String biografija, String zanr, String webStranica, String slikaZanra) {
+    public Muzicar(String ime, String prezime, String biografija, String zanr, String webStranica, String slikaZanra, ArrayList<String> listaTopPet) {
         this.ime = ime;
         this.prezime = prezime;
         this.biografija = biografija;
         this.zanr = zanr;
         this.webStranica = webStranica;
         this.slikaZanra = slikaZanra;
+        this.listaTopPet = listaTopPet;
     }
+
 
     public String getIme() {
         return ime;
@@ -61,5 +66,13 @@ public class Muzicar {
 
     public void setSlikaZanra(String slikaZanra) {
         this.slikaZanra = slikaZanra;
+    }
+
+    public ArrayList<String> getListaTopPet() {
+        return listaTopPet;
+    }
+
+    public void setListaTopPet(ArrayList<String> listaTopPet) {
+        this.listaTopPet = listaTopPet;
     }
 }

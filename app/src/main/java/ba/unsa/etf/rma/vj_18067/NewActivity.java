@@ -9,6 +9,8 @@ import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import static ba.unsa.etf.rma.vj_18067.MainActivity.muzicari;
@@ -17,6 +19,8 @@ import static ba.unsa.etf.rma.vj_18067.MainActivity.muzicari;
 public class NewActivity extends AppCompatActivity {
 
     private TextView textView1, textView2, textView3, textView4, textView5, textView6;
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,10 @@ public class NewActivity extends AppCompatActivity {
         textView5.setText(getIntent().getStringExtra("zanr"));
         textView6 = (TextView) findViewById(R.id.textView6);
         textView6.setText(getIntent().getStringExtra("webStranica"));
+        listView = (ListView)findViewById(R.id.listaPjesama);
+        System.out.print("Doslo do ovjde");
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, getIntent().getStringArrayListExtra("listaPjesama"));
+        listView.setAdapter(adapter);
 
 
         textView6.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +53,20 @@ public class NewActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(MainActivity.this, NewActivity.class);
+                myIntent.putExtra("imeAutora", muzicari.get(position).getIme());
+                myIntent.putExtra("prezimeAutora", muzicari.get(position).getPrezime());
+                myIntent.putExtra("biografija", muzicari.get(position).getBiografija());
+                myIntent.putExtra("zanr", muzicari.get(position).getZanr());
+                myIntent.putExtra("webStranica", muzicari.get(position).getWebStranica());
+                myIntent.putExtra("listaPjesama",muzicari.get(position).getListaTopPet());
+                //Uraditi isto i za ostale vrijednosti
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
 
     }
 }

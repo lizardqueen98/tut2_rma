@@ -1,5 +1,7 @@
 package ba.unsa.etf.rma.vj_18067;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import static ba.unsa.etf.rma.vj_18067.MainActivity.muzicari;
 
 
@@ -21,6 +25,7 @@ public class NewActivity extends AppCompatActivity {
     private TextView textView1, textView2, textView3, textView4, textView5, textView6;
     private ListView listView;
     private ArrayAdapter<String> adapter;
+    private ArrayList<String> pjesme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +43,8 @@ public class NewActivity extends AppCompatActivity {
         textView6 = (TextView) findViewById(R.id.textView6);
         textView6.setText(getIntent().getStringExtra("webStranica"));
         listView = (ListView)findViewById(R.id.listaPjesama);
-        System.out.print("Doslo do ovjde");
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, getIntent().getStringArrayListExtra("listaPjesama"));
+        pjesme = getIntent().getStringArrayListExtra("listaPjesama");
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, pjesme);
         listView.setAdapter(adapter);
 
 
@@ -56,17 +61,20 @@ public class NewActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Kreiranje tekstualne poruke
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "poruka");
-                sendIntent.setType("text/plain");
-                // Provjera da li postoji aplikacija koja može obaviti navedenu akciju
-                if (sendIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(sendIntent);
-                }
+                    searchYoutubeVideo(NewActivity.this, pjesme.get(position)+" "+getIntent().getStringExtra("imeAutora"));
             }
         });
 
+
+    }
+    public static void searchYoutubeVideo(Context context, String id){
+        Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/results?search_query=" + id));
+        try {
+            context.startActivity(appIntent);
+        } catch (ActivityNotFoundException ex) {
+            ex.printStackTrace();
+            context.startActivity(webIntent);
+        }
     }
 }

@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(getIntent().getAction().equals("ACTION_SEND"))
+        if(getIntent().getAction().equals("SEND"))
             tekst.setText(getIntent().getData().toString());
 
 

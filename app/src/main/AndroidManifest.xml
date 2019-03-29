@@ -15,7 +15,11 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.ACTION_SEND"/>
+            </intent-filter>
+            <!--razdvoji u razlicite intent filtere ovo od maina da bi ti se sacuvala app u emulatoru-->
+            <!--ide samo SEND ne ACTION_SEND to je u mainu-->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
                 <!--If you want your activity to receive implicit intents, it must include a category for "android.intent.category.DEFAULT" in its intent filters-->
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:mimeType="text/plain"/>

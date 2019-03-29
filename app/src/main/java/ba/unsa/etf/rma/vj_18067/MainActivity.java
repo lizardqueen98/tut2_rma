@@ -3,6 +3,7 @@ package ba.unsa.etf.rma.vj_18067;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private CustomAdapter customAdapter;
     public MainActivity mainActivity = null;
     public static ArrayList<Muzicar> muzicari = new ArrayList<>();
-    //private IntentFilter filter = new IntentFilter("ACTION_SEND");
-    //private MyReciever receiver = new MyReciever();
+    private MyReciever reciever = new MyReciever();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
         dugme = (Button)findViewById(R.id.button);
         tekst = (EditText)findViewById(R.id.editText); // List defined in XML ( See Below )
 
-        if(getIntent().getAction().equals("ACTION_SEND")){
+        /*if(getIntent().getAction().equals("ACTION_SEND")){
             System.out.println(getIntent().getData().toString());
             tekst.setText(getIntent().getData().toString());
-        }
+        }*/
 
         /**************** Create Custom Adapter *********/
         customAdapter = new CustomAdapter( mainActivity, muzicari, res);
@@ -80,6 +81,19 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(reciever);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerReceiver(reciever, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+
     public void setListData() {
 
         ArrayList<String> pjesme = new ArrayList<>();

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class NewActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> adapter;
     private ArrayList<String> pjesme;
+    private Button share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class NewActivity extends AppCompatActivity {
         pjesme = getIntent().getStringArrayListExtra("listaPjesama");
         adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, pjesme);
         listView.setAdapter(adapter);
+        share = (Button)findViewById(R.id.share);
 
 
         textView6.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +68,18 @@ public class NewActivity extends AppCompatActivity {
             }
         });
 
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, getIntent().getStringExtra("biografija"));
+                sendIntent.setType("text/plain");
+                if (sendIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(sendIntent);
+                }
+            }
+        });
 
     }
     public static void searchYoutubeVideo(Context context, String id){

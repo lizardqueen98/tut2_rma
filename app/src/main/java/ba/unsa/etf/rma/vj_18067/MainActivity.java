@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         dugme = (Button)findViewById(R.id.button);
         tekst = (EditText)findViewById(R.id.editText); // List defined in XML ( See Below )
 
+        if(getIntent().getAction().equals("ACTION_SEND")){
+            System.out.println(getIntent().getData().toString());
+            tekst.setText(getIntent().getData().toString());
+        }
+
         /**************** Create Custom Adapter *********/
         customAdapter = new CustomAdapter( mainActivity, muzicari, res);
         lista.setAdapter( customAdapter );
@@ -62,10 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.startActivity(myIntent);
             }
         });
-
-        if(getIntent().getAction().equals("SEND"))
-            tekst.setText(getIntent().getData().toString());
-
 
         //registerReceiver(receiver,filter);
 

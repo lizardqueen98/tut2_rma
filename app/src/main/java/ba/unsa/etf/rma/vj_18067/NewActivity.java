@@ -56,15 +56,15 @@ public class NewActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent myIntent = new Intent(MainActivity.this, NewActivity.class);
-                myIntent.putExtra("imeAutora", muzicari.get(position).getIme());
-                myIntent.putExtra("prezimeAutora", muzicari.get(position).getPrezime());
-                myIntent.putExtra("biografija", muzicari.get(position).getBiografija());
-                myIntent.putExtra("zanr", muzicari.get(position).getZanr());
-                myIntent.putExtra("webStranica", muzicari.get(position).getWebStranica());
-                myIntent.putExtra("listaPjesama",muzicari.get(position).getListaTopPet());
-                //Uraditi isto i za ostale vrijednosti
-                MainActivity.this.startActivity(myIntent);
+                // Kreiranje tekstualne poruke
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "poruka");
+                sendIntent.setType("text/plain");
+                // Provjera da li postoji aplikacija koja može obaviti navedenu akciju
+                if (sendIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(sendIntent);
+                }
             }
         });
 

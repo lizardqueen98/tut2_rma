@@ -7,6 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
 
+import static android.net.ConnectivityManager.EXTRA_NO_CONNECTIVITY;
+
 
 public class MyReciever extends BroadcastReceiver {
 
@@ -15,16 +17,10 @@ public class MyReciever extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-                Toast.makeText(context,"Nema interneta!!!",Toast.LENGTH_LONG).show();
+                //https://developer.android.com/reference/android/net/ConnectivityManager
+                if(intent.getBooleanExtra(EXTRA_NO_CONNECTIVITY,false))
+                        Toast.makeText(context,"Nema interneta!!!",Toast.LENGTH_LONG).show();
         }
-        /*public boolean isConnected(Context context) {
-                ConnectivityManager cm =
-                        (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-                boolean isConnected = activeNetwork != null &&
-                        activeNetwork.isConnected();
-                return isConnected;
-        }*/
 
 }

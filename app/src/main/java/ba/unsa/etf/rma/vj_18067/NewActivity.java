@@ -83,6 +83,8 @@ public class NewActivity extends AppCompatActivity {
 
     }
     public static void searchYoutubeVideo(Context context, String id){
+        //EVO OVDJE JE LINK NEDJADE
+        //https://stackoverflow.com/questions/18695537/ios-open-youtube-app-with-query-url-schemes
         Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:///results?q=" + id));
         Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/results?search_query=" + id));
         try {
